@@ -40,11 +40,11 @@ const Body = () => {
   }, []);
 
   return (
-    <main className="p-6 text-center">
-      <h1 className="text-2xl font-bold">Welcome to My Website</h1>
+    <main>
+      <h1>Welcome to My Website</h1>
       {/* Render Table Instead of List */}
       {applications.length > 0 ? (
-        <table className="table-auto border-collapse border border-gray-300 mx-auto mt-4">
+        <table>
           <thead>
             <tr>
               <th>ID</th>
@@ -65,8 +65,6 @@ const Body = () => {
       ) : (
         <p>No applications found.</p>
       )}
-
-      <p className="text-gray-600 mt-2">This is the body content.</p>
     </main>
   );
 };

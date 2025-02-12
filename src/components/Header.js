@@ -8,9 +8,6 @@ import RegisterApp from "../pages/RegisterApp";
 const Header = () => {
   return (
     <div>
-      <header className="bg-blue-500 text-white p-4 text-center text-xl">
-        My Website Header
-      </header>
       <nav>
         <Link to="/Login">
           <button>Login</button>

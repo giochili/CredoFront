@@ -44,7 +44,7 @@ function RegisterApp() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Include token if needed
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(registerData),
         }

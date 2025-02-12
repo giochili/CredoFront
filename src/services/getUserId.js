@@ -5,8 +5,8 @@ function getUserId() {
 
   if (token) {
     try {
-      const decodedToken = jwtDecode(token); // Decode the JWT
-      const UserId = decodedToken.UserId; // Extract the RoleId
+      const decodedToken = jwtDecode(token);
+      const UserId = decodedToken.UserId;
 
       if (UserId) {
         return UserId;

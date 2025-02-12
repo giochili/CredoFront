@@ -9,7 +9,7 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const handleLogin = (jwtToken) => {
     setToken(jwtToken);
-    localStorage.setItem("token", jwtToken); // Optional: Store in localStorage or sessionStorage
+    localStorage.setItem("token", jwtToken);
   };
   return (
     <BrowserRouter>

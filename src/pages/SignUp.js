@@ -47,7 +47,7 @@ function SignUp() {
   return (
     <div>
       <h1>Sign Up</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>First Name</label>
