@@ -1,26 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import getUserId from "../services/getUserId";
 
 function RegisterApp() {
   const [billAmount, setBillAmount] = useState("");
   const [valute, setValute] = useState("");
   const [period, setPeriod] = useState("");
-  const [dictionaryId, setDictionaryId] = useState(0);
+  const [dictionaryId, setDictionaryId] = useState("");
   const [userId, setUserId] = useState(0);
-  const [statusId, setStatusId] = useState(0);
+  const [statusId, setStatusId] = useState(1);
   const [token, setToken] = useState("");
+  const [loans, setLoans] = useState([]);
 
-  var ActiveToken = getUserId();
-  if (!token) {
-    setToken(ActiveToken);
-  }
+  useEffect(() => {
+    fetch("https://localhost:7185/api/GetDictionary/GetLoans")
+      .then((response) => response.json())
+      .then((json) => {
+        setLoans(json);
+        var ActiveUser = getUserId();
+        setToken(localStorage.token);
+        setUserId(ActiveUser);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
 
-  const handleSubmit = (e) => {
-    console.log(e);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const registerData = {
+      billAmount,
+      valute,
+      period,
+      dictionaryId,
+      userId,
+      statusId,
+    };
+
+    console.log("Sending data:", registerData);
+
+    try {
+      const response = await fetch(
+        "https://localhost:7185/api/Auth/AddNewApp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include token if needed
+          },
+          body: JSON.stringify(registerData),
+        }
+      );
+
+      if (response.ok) {
+        alert("Registration successful!");
+      } else {
+        alert("Registration failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
+
   return (
     <div>
-      <h1> სესხის განაცხადი</h1>
+      <h1>სესხის განაცხადი</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>თანხის ოდენობა</label>
@@ -43,7 +85,7 @@ function RegisterApp() {
         <div>
           <label>სესხის ხანგრძლივობა</label>
           <input
-            type="number"
+            type="text"
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
             required
@@ -51,20 +93,19 @@ function RegisterApp() {
         </div>
         <div>
           <label>სესხის ტიპი</label>
-          <select id="myCombo">
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-          </select>
-        </div>
-        <div>
-          <label>სტატუსი</label>
-          <input
-            type="text"
-            value={statusId}
-            onChange={(e) => setStatusId(e.target.value)}
+          <select
+            id="myCombo"
+            value={dictionaryId}
+            onChange={(e) => setDictionaryId(e.target.value)}
             required
-          />
+          >
+            <option value="">აირჩიეთ სესხის ტიპი</option>
+            {loans.map((loan) => (
+              <option key={loan.id} value={loan.descriptionId}>
+                {loan.description}
+              </option>
+            ))}
+          </select>
         </div>
         <button type="submit">Register</button>
       </form>

@@ -46,18 +46,18 @@ const Body = () => {
       {applications.length > 0 ? (
         <table className="table-auto border-collapse border border-gray-300 mx-auto mt-4">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="border border-gray-300 px-4 py-2">ID</th>
-              <th className="border border-gray-300 px-4 py-2">Valute</th>
+            <tr>
+              <th>ID</th>
+              <th>Valute</th>
             </tr>
           </thead>
           <tbody>
             {applications.map((app) => (
-              <tr key={app.id} className="border border-gray-300">
-                <td className="border border-gray-300 px-4 py-2">{app.id}</td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {app.valute}
-                </td>
+              <tr key={app.id}>
+                <td>{app.id}</td>
+                <td>{app.valute}</td>
+                <td>{app.billAmount}</td>
+                <td>{app.period}</td>
               </tr>
             ))}
           </tbody>
